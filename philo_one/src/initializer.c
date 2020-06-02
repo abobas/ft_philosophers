@@ -6,13 +6,12 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 18:13:15 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 19:43:04 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_one.h"
 #include <stdlib.h>
-#include <pthread.h>
 
 t_data		initialize_data(void)
 {

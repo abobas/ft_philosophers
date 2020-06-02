@@ -6,14 +6,12 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 19:35:07 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 19:42:21 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_two.h"
 #include <stdlib.h>
-#include <pthread.h>
-#include <semaphore.h>
 #include <fcntl.h>
 
 t_data		initialize_data(void)

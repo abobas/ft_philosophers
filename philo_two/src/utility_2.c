@@ -6,13 +6,12 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:28:16 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 18:18:38 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 19:42:39 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_two.h"
 #include <unistd.h>
-#include <stdint.h>
 #include <sys/time.h>
 
 int			fatal_error(char *str)

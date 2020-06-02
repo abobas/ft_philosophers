@@ -6,12 +6,11 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 02:10:54 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 19:25:19 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 19:41:27 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_two.h"
-#include <pthread.h>
 
 void	message(t_philosopher *philosopher, char *message_type)
 {

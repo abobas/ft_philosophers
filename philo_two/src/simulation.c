@@ -6,12 +6,11 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 18:21:17 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 19:42:32 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_two.h"
-#include <pthread.h>
 #include <unistd.h>
 
 int		stop_simulation(t_data *data)

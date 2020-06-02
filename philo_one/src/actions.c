@@ -6,12 +6,11 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:51:14 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 18:15:22 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 19:43:00 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_one.h"
-#include <pthread.h>
 #include <unistd.h>
 
 void	getting_forks(t_philosopher *philosopher)

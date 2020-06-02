@@ -6,14 +6,12 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:51:14 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 19:24:31 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 19:44:03 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_two.h"
-#include <pthread.h>
 #include <unistd.h>
-#include <semaphore.h>
 
 void	getting_forks(t_philosopher *philosopher)
 {
