@@ -6,12 +6,11 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:18:30 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 18:11:04 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/02 18:19:42 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
 #include <stdint.h>
 
 int			ft_strlen(char *str)
