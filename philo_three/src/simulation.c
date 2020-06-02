@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 00:16:28 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 00:42:18 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*stop_simulation(void *argument)
 			message(philosopher, "death");
 			exit(1);
 		}
-		usleep(5000);
+		usleep(50);
 	}
 }
 
@@ -65,18 +65,18 @@ void	kill_process(t_data *data, int i, int mode)
 	j = 0;
 	if (mode == 1)
 	{
-		while (j < i)
+		while (j < data->philosopher_count)
 		{
-			kill(data->process[j], SIGKILL);
+			if (j != i)
+				kill(data->process[j], SIGKILL);
 			j++;
 		}
 	}
 	else if (mode == 2)
 	{
-		while (j < data->philosopher_count)
+		while (j < i)
 		{
-			if (j != i)
-				kill(data->process[j], SIGKILL);
+			kill(data->process[j], SIGKILL);
 			j++;
 		}
 	}
@@ -97,12 +97,12 @@ void	wait_simulation(t_data *data)
 			waitpid(data->process[i], &status, WUNTRACED);
 			if (WIFEXITED(status))
 			{
-				count++;
 				if (WEXITSTATUS(status) == 1)
 				{
-					kill_process(data, i, 2);
+					kill_process(data, i, 1);
 					return ;
 				}
+				count++;
 			}
 			if (count == data->philosopher_count)
 				return ;
@@ -124,7 +124,7 @@ int		start_simulation(t_data *data)
 		if (data->process[i] < 0)
 		{
 			fatal_error("Creating process failed");
-			kill_process(data, i, 1);
+			kill_process(data, i, 2);
 			return (0);
 		}
 		else if (data->process[i] == 0)
