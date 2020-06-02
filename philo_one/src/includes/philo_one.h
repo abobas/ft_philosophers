@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 18:13:30 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 00:49:34 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int						start_simulation(t_data *data);
 void					getting_forks(t_philosopher *philosopher);
 void					eating(t_philosopher *philosopher);
 void					sleeping_thinking(t_philosopher *philosopher);
+void					update_status(t_philosopher *philosopher);
 void					message(t_philosopher *philosopher, char *message_type);
 uint64_t				get_time(void);
 uint64_t				ft_atoi(char *str);

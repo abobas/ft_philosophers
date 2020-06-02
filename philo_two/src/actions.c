@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:51:14 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 00:40:29 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 00:52:30 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	eating(t_philosopher *philosopher)
 		fatal_error("Unlocking semaphore failed");
 		return ;
 	}
-	philosopher->meals_consumed++;
 }
 
 void	sleeping_thinking(t_philosopher *philosopher)
@@ -62,6 +61,11 @@ void	sleeping_thinking(t_philosopher *philosopher)
 	message(philosopher, "sleep");
 	usleep(1000 * philosopher->data->sleep_duration);
 	message(philosopher, "think");
+}
+
+void	update_status(t_philosopher *philosopher)
+{
+	philosopher->meals_consumed++;
 	if (philosopher->meals_consumed == philosopher->data->times_to_eat \
 	&& philosopher->data->times_to_eat > 0)
 	{

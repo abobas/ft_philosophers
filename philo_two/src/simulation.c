@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 19:42:32 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 00:46:50 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	*simulate_philosopher(void *argument)
 		getting_forks(philosopher);
 		eating(philosopher);
 		sleeping_thinking(philosopher);
+		update_status(philosopher);
 	}
 	return ((void*)0);
 }
