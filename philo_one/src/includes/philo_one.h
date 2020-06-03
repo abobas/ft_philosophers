@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 01:08:19 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 16:14:14 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct			s_data
 {
 	t_philosopher		*philosopher;
 	pthread_mutex_t		*fork;
-	pthread_mutex_t		spaghetti;
 	pthread_mutex_t		pencil;
 	uint64_t			sleep_duration;
 	uint64_t			eat_duration;

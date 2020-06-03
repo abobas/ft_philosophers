@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 02:27:12 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 16:22:17 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct			s_data
 	t_philosopher		*philosopher;
 	pid_t				*process;
 	sem_t				*fork;
-	sem_t				*spaghetti;
 	sem_t				*pencil;
 	uint64_t			sleep_duration;
 	uint64_t			eat_duration;

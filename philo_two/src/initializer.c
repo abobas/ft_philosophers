@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 19:42:21 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 16:18:09 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,8 @@ int			allocate_philosopher(t_data *data)
 
 int			initialize_semaphore_objects(t_data *data)
 {
-	sem_unlink("/spaghetti");
 	sem_unlink("/fork");
 	sem_unlink("/pencil");
-	data->spaghetti = sem_open("/spaghetti", O_CREAT | O_EXCL, 0666, 1);
-	if (data->spaghetti == SEM_FAILED)
-	{
-		fatal_error("Initializing semaphore object failed");
-		return (0);
-	}
 	data->pencil = sem_open("/pencil", O_CREAT | O_EXCL, 0666, 1);
 	if (data->pencil == SEM_FAILED)
 	{

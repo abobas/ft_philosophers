@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 01:26:19 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 16:15:24 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		start_simulation(t_data *data)
 			fatal_error("Detaching thread failed");
 			return (0);
 		}
+		usleep(50);
 		i++;
 	}
 	while (!stop_simulation(data))

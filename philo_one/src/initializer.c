@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 19:43:04 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 16:14:06 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,6 @@ int			initialize_mutex_forks(t_data *data)
 
 int			initialize_mutex_others(t_data *data)
 {
-	if (pthread_mutex_init(&data->spaghetti, 0) != 0)
-	{
-		fatal_error("Initializing mutex object failed");
-		return (0);
-	}
 	if (pthread_mutex_init(&data->pencil, 0) != 0)
 	{
 		fatal_error("Initializing mutex object failed");

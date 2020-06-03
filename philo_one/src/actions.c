@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:51:14 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 00:52:16 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 16:23:35 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,9 @@ void	getting_forks(t_philosopher *philosopher)
 
 void	eating(t_philosopher *philosopher)
 {
-	if (pthread_mutex_lock(&philosopher->data->spaghetti))
-	{
-		fatal_error("Locking mutex object failed");
-		return ;
-	}
 	message(philosopher, "eat");
 	philosopher->last_meal = get_time();
 	usleep(1000 * philosopher->data->eat_duration);
-	if (pthread_mutex_unlock(&philosopher->data->spaghetti))
-	{
-		fatal_error("Unlocking mutex object failed");
-		return ;
-	}
-}
-
-void	sleeping_thinking(t_philosopher *philosopher)
-{
 	if (pthread_mutex_unlock(&philosopher->data->fork[philosopher->left_fork]))
 	{
 		fatal_error("Unlocking mutex object failed");
@@ -58,6 +44,10 @@ void	sleeping_thinking(t_philosopher *philosopher)
 		fatal_error("Unlocking mutex object failed");
 		return ;
 	}
+}
+
+void	sleeping_thinking(t_philosopher *philosopher)
+{
 	message(philosopher, "sleep");
 	usleep(1000 * philosopher->data->sleep_duration);
 	message(philosopher, "think");

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 03:46:19 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 16:26:28 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int		start_simulation(t_data *data)
 		}
 		else if (data->process[i] == 0)
 			simulate_philosopher(&data->philosopher[i]);
+		usleep(50);
 		i++;
 	}
 	wait_simulation(data);
