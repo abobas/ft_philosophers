@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/05/28 01:31:21 by abobas        #+#    #+#                  #
-#    Updated: 2020/06/03 00:36:01 by abobas        ########   odam.nl          #
+#    Updated: 2020/06/03 03:47:17 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC = 			main.c \
 
 SRC :=			$(SRC:%=$(SRC_DIR)%)
 
-FLAGS = 		-Wall -Werror -Wextra -pthread
+FLAGS = 		-Wall -Werror -Wextra -pthread -g
 
 all: $(NAME)
 
@@ -44,4 +44,4 @@ fclean: clean
 re:	fclean all
 
 run: fclean $(NAME)
-	./$(NAME) 10 20000 1000 1000 5
+	./$(NAME) 30 1000 100 100 5

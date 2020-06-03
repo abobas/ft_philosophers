@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 00:46:50 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 01:25:50 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		stop_simulation(t_data *data)
 	while (i < data->philosopher_count)
 	{
 		if (((get_time() - data->philosopher[i].last_meal) \
-		>= data->survival_duration) && !data->philosopher[i].enough)
+		> data->survival_duration) && !data->philosopher[i].enough)
 		{
 			message(&data->philosopher[i], "death");
 			return (1);
@@ -34,7 +34,10 @@ int		stop_simulation(t_data *data)
 		i++;
 	}
 	if (count == data->philosopher_count && data->times_to_eat > 0)
+	{
+		usleep(50);
 		return (1);
+	}
 	return (0);
 }
 
@@ -77,6 +80,6 @@ int		start_simulation(t_data *data)
 		i++;
 	}
 	while (!stop_simulation(data))
-		usleep(5000);
+		usleep(5);
 	return (1);
 }

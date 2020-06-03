@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:28:16 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 22:02:12 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 01:12:10 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@ int			fatal_error(char *str)
 int			ft_isdigit(char c)
 {
 	return (c >= '0' && c <= '9');
+}
+
+int			ft_isnumber(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int			ft_strcmp(char *s1, char *s2)

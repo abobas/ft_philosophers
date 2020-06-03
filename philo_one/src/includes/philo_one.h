@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 00:49:34 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 01:08:19 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void					message(t_philosopher *philosopher, char *message_type);
 uint64_t				get_time(void);
 uint64_t				ft_atoi(char *str);
 int						fatal_error(char *str);
-int						ft_isdigit(char c);
+int						ft_isnumber(char *str);
 int						ft_strcmp(char *s1, char *s2);
 int						ft_strlen(char *str);
 void					ft_putstr(char *str);

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 00:48:01 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 03:46:19 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*stop_simulation(void *argument)
 	while (1)
 	{
 		if ((get_time() - philosopher->last_meal) \
-		>= philosopher->data->survival_duration)
+		> philosopher->data->survival_duration)
 		{
 			message(philosopher, "death");
 			exit(1);
@@ -89,13 +89,14 @@ void	wait_simulation(t_data *data)
 	int		i;
 	int		count;
 
+	count = 0;
 	while (1)
 	{
 		i = 0;
-		count = 0;
 		while (i < data->philosopher_count)
 		{
-			waitpid(data->process[i], &status, WUNTRACED);
+			if (waitpid(data->process[i], &status, WNOHANG) > 0)
+				count++;
 			if (WIFEXITED(status))
 			{
 				if (WEXITSTATUS(status) == 1)
@@ -103,7 +104,6 @@ void	wait_simulation(t_data *data)
 					kill_process(data, i, 1);
 					return ;
 				}
-				count++;
 			}
 			if (count == data->philosopher_count)
 				return ;

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 23:54:05 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/03 02:27:38 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			initialize_semaphore_objects(t_data *data)
 	}
 	data->fork = sem_open("/fork", O_CREAT | O_EXCL, 0666, \
 	data->philosopher_count);
-	if (data->pencil == SEM_FAILED)
+	if (data->fork == SEM_FAILED)
 	{
 		fatal_error("Initializing semaphore object failed");
 		return (0);
