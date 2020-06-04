@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/05/28 01:31:21 by abobas        #+#    #+#                  #
-#    Updated: 2020/06/03 14:02:38 by abobas        ########   odam.nl          #
+#    Updated: 2020/06/04 14:36:05 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,4 +44,4 @@ fclean: clean
 re:	fclean all
 
 run: fclean $(NAME)
-	./$(NAME) 10 5000 100 100 50
+	./$(NAME) 4 410 200 200 7

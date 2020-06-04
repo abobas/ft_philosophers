@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 16:14:06 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 14:04:18 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,61 +25,59 @@ t_data		initialize_data(void)
 	return (data);
 }
 
-int			allocate_philosopher(t_data *data)
+int			memory_allocation(t_data *data)
 {
 	data->philosopher = (t_philosopher*)malloc(sizeof(t_philosopher) \
 	* data->philosopher_count);
 	if (!data->philosopher)
 	{
-		fatal_error("Memory allocation failed");
+		error("Memory allocation failed");
+		return (0);
+	}
+	data->fork = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) \
+	* data->philosopher_count);
+	if (!data->fork)
+	{
+		error("Memory allocation failed");
 		return (0);
 	}
 	return (1);
 }
 
-int			initialize_mutex_forks(t_data *data)
+int			initialize_mutex_objects(t_data *data)
 {
 	int		i;
 
-	data->fork = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) \
-	* data->philosopher_count);
-	if (!data->fork)
-	{
-		fatal_error("Memory allocation failed");
-		return (0);
-	}
 	i = 0;
 	while (i < data->philosopher_count)
 	{
 		if (pthread_mutex_init(&data->fork[i], 0) != 0)
 		{
-			fatal_error("Initializing mutex object failed");
+			error("Initializing mutex object failed");
+			return (0);
+		}
+		if (pthread_mutex_init(&data->philosopher[i].allowed_to_eat, 0) != 0)
+		{
+			error("Initializing mutex object failed");
 			return (0);
 		}
 		i++;
 	}
-	return (1);
-}
-
-int			initialize_mutex_others(t_data *data)
-{
 	if (pthread_mutex_init(&data->pencil, 0) != 0)
 	{
-		fatal_error("Initializing mutex object failed");
+		error("Initializing mutex object failed");
 		return (0);
 	}
 	return (1);
 }
 
-int			initialize_philosopher(t_data *data)
+int			initializer(t_data *data)
 {
 	int		i;
 
-	if (!allocate_philosopher(data))
+	if (!memory_allocation(data))
 		return (0);
-	if (!initialize_mutex_forks(data))
-		return (0);
-	if (!initialize_mutex_others(data))
+	if (!initialize_mutex_objects(data))
 		return (0);
 	i = 0;
 	while (i < data->philosopher_count)
@@ -88,7 +86,6 @@ int			initialize_philosopher(t_data *data)
 		data->philosopher[i].right_fork = (i + 1) % data->philosopher_count;
 		data->philosopher[i].position = i + 1;
 		data->philosopher[i].meals_consumed = 0;
-		data->philosopher[i].enough = 0;
 		data->philosopher[i].data = data;
 		i++;
 	}

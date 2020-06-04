@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:15:26 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/02 17:10:33 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 13:43:42 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		main(int ac, char **av)
 		return (1);
 	data = initialize_data();
 	parser(av, &data);
-	if (!initialize_philosopher(&data))
+	if (!initializer(&data))
 		return (1);
 	if (!start_simulation(&data))
 		return (1);
