@@ -6,24 +6,14 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 02:10:54 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 03:13:56 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/05 00:05:14 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_three.h"
-#include <unistd.h>
-#include <signal.h>
 
-void	message(t_philosopher *philosopher, char *message_type)
+void	put_text(char *message_type)
 {
-	if (sem_wait(philosopher->data->pencil) < 0)
-	{
-		fatal_error("Locking semaphore failed");
-		return ;
-	}
-	ft_putnbr(get_time() - philosopher->data->simulation_start);
-	ft_putchar('\t');
-	ft_putnbr(philosopher->position);
 	if (!ft_strcmp(message_type, "fork"))
 		ft_putstr(" has taken a fork\n");
 	else if (!ft_strcmp(message_type, "eat"))
@@ -32,13 +22,26 @@ void	message(t_philosopher *philosopher, char *message_type)
 		ft_putstr(" is sleeping\n");
 	else if (!ft_strcmp(message_type, "think"))
 		ft_putstr(" is thinking\n");
-	else if (!ft_strcmp(message_type, "enough"))
-		ft_putstr(" has had enough\n");
-	else if (!ft_strcmp(message_type, "death"))
+}
+
+void	message(t_philosopher *philosopher, char *message_type)
+{
+	if (sem_wait(philosopher->data->pencil) < 0)
+		return ;
+	ft_putnbr(get_time() - philosopher->data->simulation_start);
+	ft_putchar('\t');
+	if (!ft_strcmp(message_type, "enough"))
+	{
+		ft_putstr("All philosophers have eaten enough\n");
+		return ;
+	}
+	ft_putnbr(philosopher->position);
+	if (!ft_strcmp(message_type, "death"))
 	{
 		ft_putstr(" died\n");
 		return ;
 	}
+	put_text(message_type);
 	if (sem_post(philosopher->data->pencil) < 0)
-		fatal_error("Unlocking semaphore failed");
+		return ;
 }

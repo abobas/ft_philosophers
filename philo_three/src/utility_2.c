@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:28:16 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 01:12:10 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 23:37:23 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-int			fatal_error(char *str)
+int			error(char *str)
 {
 	write(2, str, ft_strlen(str));
 	write(2, "\n", 1);
@@ -60,7 +60,7 @@ uint64_t	get_time(void)
 
 	if (gettimeofday(&time_value, 0) < 0)
 	{
-		fatal_error("Retrieving time failed");
+		error("Retrieving time failed");
 		return (-1);
 	}
 	return (time_value.tv_sec * 1000 + (time_value.tv_usec / 1000));

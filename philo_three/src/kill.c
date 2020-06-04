@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   kill.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/05/28 01:15:26 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 23:36:48 by abobas        ########   odam.nl         */
+/*   Created: 2020/06/04 23:59:00 by abobas        #+#    #+#                 */
+/*   Updated: 2020/06/05 00:05:52 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_three.h"
+#include <signal.h>
 
-int		main(int ac, char **av)
+void	kill_process(t_data *data)
 {
-	t_data		data;
+	int		i;
 
-	if (!validator(ac, av))
-		return (1);
-	data = initialize_data();
-	parser(av, &data);
-	if (!initializer(&data))
-		return (1);
-	if (!start_simulation(&data))
-		return (1);
-	return (0);
+	i = 0;
+	while (i < data->philosopher_count)
+	{
+		kill(data->process[i], SIGKILL);
+		i++;
+	}
 }

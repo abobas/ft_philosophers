@@ -6,109 +6,97 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 16:26:28 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/05 00:05:44 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_three.h"
 #include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
 #include <pthread.h>
-#include <sys/wait.h>
+#include <stdlib.h>
 
-void	*stop_simulation(void *argument)
+void	*check_health(void *argument)
 {
 	t_philosopher	*philosopher;
 
 	philosopher = (t_philosopher*)argument;
 	while (1)
 	{
-		if ((get_time() - philosopher->last_meal) \
-		> philosopher->data->survival_duration)
+		if (sem_wait(philosopher->currently_eating) < 0)
+			return ((void*)0);
+		if (((get_time() - philosopher->last_meal) > \
+		philosopher->data->survival_duration))
 		{
 			message(philosopher, "death");
-			exit(1);
+			sem_post(philosopher->data->end_simulation);
+			return ((void*)0);
 		}
-		usleep(50);
+		if (sem_post(philosopher->currently_eating) < 0)
+			return ((void*)0);
+		if (philosopher->data->times_to_eat > 0)
+			if (philosopher->meals_consumed >= philosopher->data->times_to_eat)
+				sem_post(philosopher->done_eating);
+		usleep(500);
 	}
+	return ((void*)0);
 }
 
 void	simulate_philosopher(t_philosopher *philosopher)
 {
 	pthread_t		tid;
 
-	if (pthread_create(&tid, 0, &stop_simulation, \
+	if (pthread_create(&tid, 0, &check_health, \
 	(void*)philosopher))
 	{
-		fatal_error("Creating thread failed");
+		error("Creating thread failed");
 		exit(1);
 	}
 	if (pthread_detach(tid))
 	{
-		fatal_error("Detaching thread failed");
+		error("Detaching thread failed");
 		exit(1);
 	}
-	while (!philosopher->enough)
+	while (1)
 	{
 		getting_forks(philosopher);
 		eating(philosopher);
 		sleeping_thinking(philosopher);
-		update_status(philosopher);
-	}
-	exit(0);
-}
-
-void	kill_process(t_data *data, int i, int mode)
-{
-	int		j;
-
-	j = 0;
-	if (mode == 1)
-	{
-		while (j < data->philosopher_count)
-		{
-			if (j != i)
-				kill(data->process[j], SIGKILL);
-			j++;
-		}
-	}
-	else if (mode == 2)
-	{
-		while (j < i)
-		{
-			kill(data->process[j], SIGKILL);
-			j++;
-		}
 	}
 }
 
-void	wait_simulation(t_data *data)
+void	*check_eaten(void *argument)
 {
-	int		status;
-	int		i;
-	int		count;
+	t_data		*data;
+	int			i;
 
-	count = 0;
-	while (1)
+	data = (t_data*)argument;
+	i = 0;
+	while (i < data->philosopher_count)
 	{
-		i = 0;
-		while (i < data->philosopher_count)
-		{
-			if (waitpid(data->process[i], &status, WNOHANG) > 0)
-				count++;
-			if (WIFEXITED(status))
-			{
-				if (WEXITSTATUS(status) == 1)
-				{
-					kill_process(data, i, 1);
-					return ;
-				}
-			}
-			if (count == data->philosopher_count)
-				return ;
-			i++;
-		}
+		sem_wait(data->philosopher[i].done_eating);
+		i++;
+	}
+	message(&data->philosopher[i - 1], "enough");
+	sem_post(data->end_simulation);
+	return ((void*)0);
+}
+
+void	monitor_simulation(t_data *data)
+{
+	pthread_t	tid;
+
+	if (pthread_create(&tid, 0, &check_eaten, \
+	(void*)data))
+	{
+		error("Creating thread failed");
+		kill_process(data);
+		exit(1);
+	}
+	if (pthread_detach(tid))
+	{
+		error("Detaching thread failed");
+		kill_process(data);
+		exit(1);
 	}
 }
 
@@ -124,15 +112,17 @@ int		start_simulation(t_data *data)
 		data->process[i] = fork();
 		if (data->process[i] < 0)
 		{
-			fatal_error("Creating process failed");
-			kill_process(data, i, 2);
+			error("Creating process failed");
+			kill_process(data);
 			return (0);
 		}
 		else if (data->process[i] == 0)
 			simulate_philosopher(&data->philosopher[i]);
-		usleep(50);
+		usleep(100);
 		i++;
 	}
-	wait_simulation(data);
+	monitor_simulation(data);
+	sem_wait(data->end_simulation);
+	kill_process(data);
 	return (1);
 }

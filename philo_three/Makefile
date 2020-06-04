@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/05/28 01:31:21 by abobas        #+#    #+#                  #
-#    Updated: 2020/06/03 16:25:26 by abobas        ########   odam.nl          #
+#    Updated: 2020/06/04 23:59:59 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = 			main.c \
 				simulation.c \
 				actions.c \
 				messages.c \
+				kill.c \
 				utility_1.c \
 				utility_2.c
 
