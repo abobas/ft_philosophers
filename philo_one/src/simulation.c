@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 15:06:04 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 16:15:25 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,16 @@
 int		check_health(t_data *data, int i)
 {
 	if (pthread_mutex_lock(&data->philosopher[i].allowed_to_eat))
-	{
-		error("Locking mutex object failed");
-		return (1);
-	}
+		return (0);
 	if ((get_time() - data->philosopher[i].last_meal) \
 	> data->survival_duration)
 	{
 		message(&data->philosopher[i], "death");
-		return (1);
+		return (0);
 	}
 	if (pthread_mutex_unlock(&data->philosopher[i].allowed_to_eat))
-	{
-		error("Unlocking mutex object failed");
-		return (1);
-	}
-	return (0);
+		return (0);
+	return (1);
 }
 
 int		stop_simulation(t_data *data)
@@ -43,7 +37,7 @@ int		stop_simulation(t_data *data)
 	i = 0;
 	while (i < data->philosopher_count)
 	{
-		if (check_health(data, i))
+		if (!check_health(data, i))
 			return (1);
 		if (data->times_to_eat > 0)
 			if (data->philosopher[i].meals_consumed >= data->times_to_eat)
@@ -93,10 +87,10 @@ int		start_simulation(t_data *data)
 			error("Detaching thread failed");
 			return (0);
 		}
-		usleep(1000);
+		usleep(100);
 		i++;
 	}
 	while (!stop_simulation(data))
-		usleep(5);
+		usleep(100);
 	return (1);
 }
