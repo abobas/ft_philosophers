@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 16:25:39 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 16:27:10 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		check_health(t_data *data, int i)
 	if (pthread_mutex_lock(&data->philosopher[i].allowed_to_eat))
 		return (0);
 	if ((get_time() - data->philosopher[i].last_meal) \
-	> data->survival_duration && !data->philosopher[i].currently_eating)
+	> data->survival_duration + 2 && !data->philosopher[i].currently_eating)
 	{
 		message(&data->philosopher[i], "death");
 		return (0);
