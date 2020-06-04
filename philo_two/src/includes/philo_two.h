@@ -6,14 +6,13 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 19:59:37 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 22:33:30 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_TWO_H
 # define PHILO_TWO_H
 
-# include <pthread.h>
 # include <stdint.h>
 # include <semaphore.h>
 

@@ -6,12 +6,13 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 22:22:35 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 22:33:50 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_two.h"
 #include <unistd.h>
+#include <pthread.h>
 
 void	*check_health(void *argument)
 {
