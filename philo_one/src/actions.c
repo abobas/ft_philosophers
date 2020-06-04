@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:51:14 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 16:24:22 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 16:34:14 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void	eating(t_philosopher *philosopher)
 		return ;
 	message(philosopher, "eat");
 	philosopher->last_meal = get_time();
+	if (pthread_mutex_unlock(&philosopher->allowed_to_eat))
+		return ;
 	philosopher->meals_consumed++;
 	usleep(1000 * philosopher->data->eat_duration);
 	philosopher->currently_eating = 0;
 	if (pthread_mutex_unlock(&philosopher->data->fork[philosopher->left_fork]))
 		return ;
 	if (pthread_mutex_unlock(&philosopher->data->fork[philosopher->right_fork]))
-		return ;
-	if (pthread_mutex_unlock(&philosopher->allowed_to_eat))
 		return ;
 }
 
