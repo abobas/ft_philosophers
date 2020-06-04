@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 16:18:09 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 21:27:48 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ t_data		initialize_data(void)
 	data.survival_duration = 0;
 	data.philosopher_count = 0;
 	data.times_to_eat = 0;
+	data.stop = 0;
 	return (data);
 }
 
-int			allocate_philosopher(t_data *data)
+int			memory_allocation(t_data *data)
 {
-	data->philosopher = (t_philosopher*)malloc(sizeof(t_philosopher) \
-	* data->philosopher_count);
+	data->philosopher = (t_philosopher*)malloc(sizeof(t_philosopher) * \
+	data->philosopher_count);
 	if (!data->philosopher)
 	{
-		fatal_error("Memory allocation failed");
+		error("Memory allocation failed");
 		return (0);
 	}
 	return (1);
@@ -45,33 +46,59 @@ int			initialize_semaphore_objects(t_data *data)
 	data->pencil = sem_open("/pencil", O_CREAT | O_EXCL, 0666, 1);
 	if (data->pencil == SEM_FAILED)
 	{
-		fatal_error("Initializing semaphore object failed");
+		error("Initializing semaphore object failed");
 		return (0);
 	}
 	data->fork = sem_open("/fork", O_CREAT | O_EXCL, 0666, \
 	data->philosopher_count);
-	if (data->pencil == SEM_FAILED)
+	if (data->fork == SEM_FAILED)
 	{
-		fatal_error("Initializing semaphore object failed");
+		error("Initializing semaphore object failed");
 		return (0);
 	}
 	return (1);
 }
 
-int			initialize_philosopher(t_data *data)
+int			initialize_semaphore_status(t_data *data)
+{
+	char	str[3];
+	int		i;
+
+	str[0] = '\\';
+	str[1] = 'a';
+	str[2] = '\0';
+	i = 0;
+	while (i < data->philosopher_count)
+	{
+		sem_unlink(str);
+		data->philosopher[i].currently_eating = sem_open(str, \
+		O_CREAT | O_EXCL, 0666, 1);
+		if (data->philosopher[i].currently_eating == SEM_FAILED)
+		{
+			error("Initializing semaphore object failed");
+			return (0);
+		}
+		i++;
+		str[1]++;
+	}
+	return (1);
+}
+
+int			initializer(t_data *data)
 {
 	int		i;
 
-	if (!allocate_philosopher(data))
+	if (!memory_allocation(data))
 		return (0);
 	if (!initialize_semaphore_objects(data))
+		return (0);
+	if (!initialize_semaphore_status(data))
 		return (0);
 	i = 0;
 	while (i < data->philosopher_count)
 	{
 		data->philosopher[i].position = i + 1;
 		data->philosopher[i].meals_consumed = 0;
-		data->philosopher[i].enough = 0;
 		data->philosopher[i].data = data;
 		i++;
 	}

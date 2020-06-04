@@ -6,7 +6,7 @@
 #    By: abobas <abobas@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/05/28 01:31:21 by abobas        #+#    #+#                  #
-#    Updated: 2020/06/03 16:21:35 by abobas        ########   odam.nl          #
+#    Updated: 2020/06/04 20:34:32 by abobas        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC = 			main.c \
 
 SRC :=			$(SRC:%=$(SRC_DIR)%)
 
-FLAGS = 		-Wall -Werror -Wextra -pthread
+FLAGS = 		-Wall -Werror -Wextra -pthread -g
 
 all: $(NAME)
 

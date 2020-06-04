@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/03 16:18:11 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 19:59:37 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@
 typedef struct			s_philosopher
 {
 	struct s_data		*data;
-	int					left_fork;
-	int					right_fork;
+	uint64_t			last_meal;
+	sem_t				*currently_eating;
 	int					position;
 	int					meals_consumed;
-	int					enough;
-	uint64_t			last_meal;
 }						t_philosopher;
 
 typedef struct			s_data
@@ -39,21 +37,21 @@ typedef struct			s_data
 	uint64_t			simulation_start;
 	int					philosopher_count;
 	int					times_to_eat;
+	int					stop;
 }						t_data;
 
 t_data					initialize_data(void);
-int						initialize_philosopher(t_data *data);
+int						initializer(t_data *data);
 int						validator(int ac, char **av);
 void					parser(char **av, t_data *data);
 int						start_simulation(t_data *data);
 void					getting_forks(t_philosopher *philosopher);
 void					eating(t_philosopher *philosopher);
 void					sleeping_thinking(t_philosopher *philosopher);
-void					update_status(t_philosopher *philosopher);
 void					message(t_philosopher *philosopher, char *message_type);
 uint64_t				get_time(void);
 uint64_t				ft_atoi(char *str);
-int						fatal_error(char *str);
+int						error(char *str);
 int						ft_isnumber(char *str);
 int						ft_strcmp(char *s1, char *s2);
 int						ft_strlen(char *str);
