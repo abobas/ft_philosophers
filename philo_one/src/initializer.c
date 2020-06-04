@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 14:04:18 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 16:24:53 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int			initializer(t_data *data)
 		data->philosopher[i].position = i + 1;
 		data->philosopher[i].meals_consumed = 0;
 		data->philosopher[i].data = data;
+		data->philosopher[i].currently_eating = 0;
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 14:00:38 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 16:24:39 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct			s_philosopher
 	int					right_fork;
 	int					position;
 	int					meals_consumed;
+	int					currently_eating;
 }						t_philosopher;
 
 typedef struct			s_data
