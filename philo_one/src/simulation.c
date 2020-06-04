@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 17:43:41 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 17:53:54 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*check_health(void *argument)
 	t_philosopher	*philosopher;
 
 	philosopher = (t_philosopher*)argument;
-	while (1)
+	while (!philosopher->data->stop)
 	{
 		if (pthread_mutex_lock(&philosopher->currently_eating))
 			return ((void*)0);
@@ -80,7 +80,7 @@ void	*simulate_philosopher(void *argument)
 		error("Detaching thread failed");
 		return ((void*)0);
 	}
-	while (1)
+	while (!philosopher->data->stop)
 	{
 		getting_forks(philosopher);
 		eating(philosopher);
