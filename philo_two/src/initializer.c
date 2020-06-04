@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 21:27:48 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 22:19:32 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,13 @@ int			initialize_semaphore_objects(t_data *data)
 
 int			initialize_semaphore_status(t_data *data)
 {
-	char	str[3];
 	int		i;
 
-	str[0] = '\\';
-	str[1] = 'a';
-	str[2] = '\0';
 	i = 0;
 	while (i < data->philosopher_count)
 	{
-		sem_unlink(str);
-		data->philosopher[i].currently_eating = sem_open(str, \
+		sem_unlink("/currently_eating");
+		data->philosopher[i].currently_eating = sem_open("/currently_eating", \
 		O_CREAT | O_EXCL, 0666, 1);
 		if (data->philosopher[i].currently_eating == SEM_FAILED)
 		{
@@ -79,7 +75,6 @@ int			initialize_semaphore_status(t_data *data)
 			return (0);
 		}
 		i++;
-		str[1]++;
 	}
 	return (1);
 }
