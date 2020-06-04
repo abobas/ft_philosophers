@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 16:24:53 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 17:07:05 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_data		initialize_data(void)
 	data.survival_duration = 0;
 	data.philosopher_count = 0;
 	data.times_to_eat = 0;
+	data.stop = 0;
 	return (data);
 }
 

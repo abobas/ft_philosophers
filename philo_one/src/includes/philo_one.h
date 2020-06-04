@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:21:49 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 16:24:39 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 17:06:55 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct			s_data
 	uint64_t			simulation_start;
 	int					philosopher_count;
 	int					times_to_eat;
+	int					stop;
 }						t_data;
 
 t_data					initialize_data(void);

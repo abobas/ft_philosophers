@@ -6,26 +6,33 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 16:44:23 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 17:20:17 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_one.h"
 #include <unistd.h>
 
-int		check_health(t_data *data, int i)
+void	*check_health(void *argument)
 {
-	if (pthread_mutex_lock(&data->philosopher[i].allowed_to_eat))
-		return (0);
-	if ((get_time() - data->philosopher[i].last_meal) \
-	> data->survival_duration && !data->philosopher[i].currently_eating)
+	t_philosopher	*philosopher;
+
+	philosopher = (t_philosopher*)argument;
+	while (1)
 	{
-		message(&data->philosopher[i], "death");
-		return (0);
+		if (pthread_mutex_lock(&philosopher->allowed_to_eat))
+			return ((void*)0);
+		if (((get_time() - philosopher->last_meal) > \
+		philosopher->data->survival_duration) && !philosopher->currently_eating)
+		{
+			message(philosopher, "death");
+			philosopher->data->stop = 1;
+			return ((void*)0);
+		}
+		if (pthread_mutex_unlock(&philosopher->allowed_to_eat))
+			return ((void*)0);
 	}
-	if (pthread_mutex_unlock(&data->philosopher[i].allowed_to_eat))
-		return (0);
-	return (1);
+	return ((void*)0);
 }
 
 int		stop_simulation(t_data *data)
@@ -35,19 +42,23 @@ int		stop_simulation(t_data *data)
 
 	count = 0;
 	i = 0;
-	while (i < data->philosopher_count)
-	{
-		if (!check_health(data, i))
-			return (1);
-		if (data->times_to_eat > 0)
-			if (data->philosopher[i].meals_consumed >= data->times_to_eat)
-				count++;
-		i++;
-	}
-	if (count == data->philosopher_count && data->times_to_eat > 0)
-	{
-		message(&data->philosopher[i - 1], "enough");
+	if (data->stop == 1)
 		return (1);
+	if (data->times_to_eat > 0)
+	{
+		while (i < data->philosopher_count)
+		{
+			if (data->philosopher[i].meals_consumed >= data->times_to_eat)
+			{
+				count++;
+				if (count == data->philosopher_count && data->times_to_eat > 0)
+				{
+					message(&data->philosopher[i], "enough");
+					return (1);
+				}
+			}
+			i++;
+		}
 	}
 	return (0);
 }
@@ -55,8 +66,20 @@ int		stop_simulation(t_data *data)
 void	*simulate_philosopher(void *argument)
 {
 	t_philosopher	*philosopher;
+	pthread_t		tid;
 
 	philosopher = (t_philosopher*)argument;
+	philosopher->last_meal = get_time();
+	if (pthread_create(&tid, 0, &check_health, (void*)&philosopher))
+	{
+		error("Creating thread failed");
+		return ((void*)0);
+	}
+	if (pthread_detach(tid))
+	{
+		error("Detaching thread failed");
+		return ((void*)0);
+	}
 	while (1)
 	{
 		getting_forks(philosopher);
