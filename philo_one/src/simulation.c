@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 17:29:12 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 17:43:41 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,8 @@ void	*check_health(void *argument)
 	philosopher = (t_philosopher*)argument;
 	while (1)
 	{
-		if (pthread_mutex_lock(&philosopher->allowed_to_eat))
-		{
-			ft_putstr("jemoeder");
+		if (pthread_mutex_lock(&philosopher->currently_eating))
 			return ((void*)0);
-		}
 		if (((get_time() - philosopher->last_meal) > \
 		philosopher->data->survival_duration))
 		{
@@ -32,11 +29,8 @@ void	*check_health(void *argument)
 			philosopher->data->stop = 1;
 			return ((void*)0);
 		}
-		if (pthread_mutex_unlock(&philosopher->allowed_to_eat))
-		{
-			ft_putstr("jemoeder");
+		if (pthread_mutex_unlock(&philosopher->currently_eating))
 			return ((void*)0);
-		}
 		usleep(500);
 	}
 	return ((void*)0);

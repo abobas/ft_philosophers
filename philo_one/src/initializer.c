@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/28 01:55:05 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 17:07:05 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 17:43:15 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			initialize_mutex_objects(t_data *data)
 			error("Initializing mutex object failed");
 			return (0);
 		}
-		if (pthread_mutex_init(&data->philosopher[i].allowed_to_eat, 0) != 0)
+		if (pthread_mutex_init(&data->philosopher[i].currently_eating, 0) != 0)
 		{
 			error("Initializing mutex object failed");
 			return (0);
@@ -88,7 +88,6 @@ int			initializer(t_data *data)
 		data->philosopher[i].position = i + 1;
 		data->philosopher[i].meals_consumed = 0;
 		data->philosopher[i].data = data;
-		data->philosopher[i].currently_eating = 0;
 		i++;
 	}
 	return (1);
