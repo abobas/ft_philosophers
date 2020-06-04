@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 17:53:54 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 22:23:01 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		stop_simulation(t_data *data)
 				if (count == data->philosopher_count)
 				{
 					message(&data->philosopher[i], "enough");
+					data->stop = 1;
 					return (1);
 				}
 			}
