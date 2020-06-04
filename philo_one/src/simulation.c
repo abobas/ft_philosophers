@@ -6,7 +6,7 @@
 /*   By: abobas <abobas@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 01:42:11 by abobas        #+#    #+#                 */
-/*   Updated: 2020/06/04 17:20:17 by abobas        ########   odam.nl         */
+/*   Updated: 2020/06/04 17:29:12 by abobas        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@ void	*check_health(void *argument)
 	while (1)
 	{
 		if (pthread_mutex_lock(&philosopher->allowed_to_eat))
+		{
+			ft_putstr("jemoeder");
 			return ((void*)0);
+		}
 		if (((get_time() - philosopher->last_meal) > \
-		philosopher->data->survival_duration) && !philosopher->currently_eating)
+		philosopher->data->survival_duration))
 		{
 			message(philosopher, "death");
 			philosopher->data->stop = 1;
 			return ((void*)0);
 		}
 		if (pthread_mutex_unlock(&philosopher->allowed_to_eat))
+		{
+			ft_putstr("jemoeder");
 			return ((void*)0);
+		}
+		usleep(500);
 	}
 	return ((void*)0);
 }
@@ -51,7 +58,7 @@ int		stop_simulation(t_data *data)
 			if (data->philosopher[i].meals_consumed >= data->times_to_eat)
 			{
 				count++;
-				if (count == data->philosopher_count && data->times_to_eat > 0)
+				if (count == data->philosopher_count)
 				{
 					message(&data->philosopher[i], "enough");
 					return (1);
@@ -69,8 +76,7 @@ void	*simulate_philosopher(void *argument)
 	pthread_t		tid;
 
 	philosopher = (t_philosopher*)argument;
-	philosopher->last_meal = get_time();
-	if (pthread_create(&tid, 0, &check_health, (void*)&philosopher))
+	if (pthread_create(&tid, 0, &check_health, (void*)philosopher))
 	{
 		error("Creating thread failed");
 		return ((void*)0);
