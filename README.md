@@ -1,8 +1,9 @@
-# ft_philosophers
+# Philosophers
 
-Project for Codam (42 Network)
+## Project
 
-- Assignment: introduction to concurrency and mutual exclusion in C
-- Scope: explored the differences between threads vs. forks and mutexes vs. semaphores
-- Grade: 100%
-- Date: 8 June 2020
+This is a project for Codam (42 Network). <br>
+The project was an introduction to concurrency and mutual exclusion in C. <br>
+In the three different versions of this program I explored the differences between threads and processes and between mutex and semaphore.
+
+I finished the project on 8/6/2020 with a grade of 100%.
